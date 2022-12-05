@@ -3,6 +3,7 @@
  * @license This software is free - http://www.gnu.org/licenses/gpl.html
  */
 
+#include <chrono>
 #include <iostream>
 
 double f(double x) {
@@ -23,5 +24,11 @@ double integral(double a, double b, int n) {
 }
 
 int main() {
-    std::cout << integral(1, 10, 100000000) << std::endl;
+    auto start = std::chrono::steady_clock::now();
+
+    std::cout << "integral: " << integral(1, 10, 100'000'000) << std::endl;
+
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }
