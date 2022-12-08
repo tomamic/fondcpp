@@ -4,9 +4,9 @@
 @license This software is free - http://www.gnu.org/licenses/gpl.html
 '''
 
-#import cppyy, time
-#cppyy.include("integral.cpp")
-#from cppyy.gbl import integral
+import cppyy, time
+cppyy.include("integral.cpp")
+from cppyy.gbl import integral
 
 def py_f(x: float) -> float:
     return x * x + x
@@ -26,14 +26,15 @@ def main():
     import os, time
     
     t0 = time.time()
-    #i = integral(1, 10, 100_000_000)
-    i = os.system("./integral")
-    t = time.time() - t0
-    print(f"C++\t{i:10.4f}\t{t:10.4f}")
+    i = integral(1, 10, 100_000_000)
+    #i = os.system("./integral")
+    t_cpp = time.time() - t0
+    print(f"C++\t{i:10.4f}\t{t_cpp:10.4f}")
 
     t0 = time.time()
     i = py_integral(1, 10, 100_000_000)
-    t = time.time() - t0
-    print(f"Python\t{i:10.4f}\t{t:10.4f}")
+    t_py = time.time() - t0
+    print(f"Python\t{i:10.4f}\t{t_py:10.4f}")
+    print(t_py / t_cpp)
 
 main()
