@@ -19,15 +19,13 @@ def py_integral(a: float, b: float, n: int) -> float:
     return total
 
 def main():
-    import subprocess, time
-    subprocess.run(["g++", "-O3", "integral.cpp", "-o", "_integral"])
+    import cppyy, time
+    cppyy.include("integral.cpp")
+    from cppyy.gbl import integral
 
     t0 = time.time()
-    result = subprocess.run(["./_integral", "1", "10", "100000000"],
-                            capture_output=True, text=True)
+    i = integral(1, 10, 100_000_000)
     t_cpp = time.time() - t0
-    print(result.stdout)
-    i = float(result.stdout.split()[1])
     print(f"C++\t{i:10.4f}\t{t_cpp:10.4f}")
 
     t0 = time.time()
